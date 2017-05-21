@@ -1,4 +1,4 @@
-package de.kraemer.tim.tippspiel;
+package de.kraemer.tim.tippspiel.Entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +15,9 @@ public class Card {
 	private String name;
 	@ManyToOne
 	private Player owner;
-	//private CardType type;
+	
+	@ManyToOne
+	private CardType type;
 	
 	public String getName() {
 		return name;

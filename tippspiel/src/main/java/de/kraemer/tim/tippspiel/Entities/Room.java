@@ -1,19 +1,23 @@
-package de.kraemer.tim.tippspiel;
+package de.kraemer.tim.tippspiel.Entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-//@Entity
+@Entity
 public class Room {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	private Integer name;
-	private Theme theme;
 	private String password;
 	private Integer maxPlayers;
+	
+	@ManyToOne
+	private Theme theme;
+	
 	public Integer getId() {
 		return id;
 	}

@@ -1,5 +1,6 @@
-package de.kraemer.tim.tippspiel;
+package de.kraemer.tim.tippspiel.Entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ public class Account {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	
+	@Column(unique=true)
 	private String name;
 	private String password;
 	
