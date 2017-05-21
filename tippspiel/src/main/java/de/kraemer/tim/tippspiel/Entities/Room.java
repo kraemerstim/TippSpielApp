@@ -11,7 +11,7 @@ public class Room {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	private Integer name;
+	private String name;
 	private String password;
 	private Integer maxPlayers;
 	
@@ -24,10 +24,10 @@ public class Room {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getName() {
+	public String getName() {
 		return name;
 	}
-	public void setName(Integer name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	public Theme getTheme() {
