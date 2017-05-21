@@ -1,0 +1,4 @@
+1. Welche Dateien müssen in Git übertragen werden? (IDE-Unabhängig, wie dann importieren?)
+2. Contoller <-> Rest?
+3. Unit-Tests?
+4. Rest-Api -> Wo werden z.B. Räume erstellt? /rooms/add?ThemeID=123 oder /themes/123/CreateRoom
