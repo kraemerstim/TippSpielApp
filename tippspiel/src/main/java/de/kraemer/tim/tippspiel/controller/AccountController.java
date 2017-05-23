@@ -2,6 +2,7 @@ package de.kraemer.tim.tippspiel.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,5 +61,13 @@ public class AccountController {
 		player.setAccount(account);
 		playerRepository.save(player);
 		return player;
+	}
+	
+	@GetMapping(path="/{id}/test")
+	public String testThymeLeaf(@PathVariable int id, Model model)
+	{
+		Account account = accountRepository.findOne(id);
+		model.addAttribute("account", account);
+		return "test";
 	}
 }
