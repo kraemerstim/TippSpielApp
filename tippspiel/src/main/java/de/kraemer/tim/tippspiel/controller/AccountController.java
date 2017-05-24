@@ -70,4 +70,11 @@ public class AccountController {
 		model.addAttribute("account", account);
 		return "test";
 	}
+	
+	@GetMapping(path="/list")
+	public String testList(Model model)
+	{
+		model.addAttribute("accounts", accountRepository.findAll());
+		return "Auflistung";
+	}
 }
