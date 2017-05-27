@@ -5,12 +5,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+<h1>Rooms</h1>
 <table>
-	<tr th:each="acc,iterationStatus  : ${accounts}">
+	<tr th:each="room,iterationStatus  : ${rooms}">
         <td th:text="${iterationStatus.count}">1</td>
-        <td th:text="${acc.name}">Name</td>
-        <td th:text="${acc.password}">City</td>
+        <td th:text="${room.name}">Name</td>
+        <td th:text="${room.maxPlayers}">MaxPlayers</td>
+        <td th:text="${room.theme.title}">Title</td>
     </tr>
     </table>
+    <a href="#" th:href="@{/}">Back to home</a> <br />
 </body>
 </html>

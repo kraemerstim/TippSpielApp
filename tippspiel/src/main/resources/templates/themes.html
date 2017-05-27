@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Getting Started: Serving Web Content</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Themes:</h1>
+	<table th:if="${not #lists.isEmpty(themes)}">
+		<tr>
+			<td>#</td>
+			<td>Title</td>
+			<td>Description</td>
+			<td>Anzeigen</td>
+		</tr>
+		<tr th:each="theme,iterationStatus  : ${themes}">
+			<td th:text="${iterationStatus.count}">1</td>
+			<td th:text="${theme.title}">Title</td>
+			<td th:text="${theme.description}">Description</td>
+			<td><a href="#" th:href="@{/theme/{id}/show(id=${theme.id})}">Show</a></td>
+		</tr>
+	</table>
+	
+	<div th:if="${theme}" th:object="${theme}">
+		<h1 th:text="'Infos for theme ' + *{title} + ':'">Theme-Infos:</h1>
+		<table>
+			<tr>
+				<td>#</td>
+				<td>Roomname</td>
+			</tr>
+			<tr th:each="room,iterationStatus  : *{rooms}">
+				<td th:text="${iterationStatus.count}">1</td>
+				<td th:text="${room.name}">Raumname</td>
+			</tr>
+		</table>
+		<h2>Create new Room:</h2>
+		<form action="#" th:action="@{/theme/{id}/createRoom(id=${theme.id})}" th:object="${roomData}" method="post">
+    		<p>Title: <input type="text" th:field="*{name}" /></p>
+       		<p><input type="submit" value="Erstellen" /></p>
+   		</form>
+	</div>
+	
+	<p />
+	<h2>Create new theme:</h2>
+	<form action="#" th:action="@{/theme/add}" th:object="${themeData}" method="post">
+    	<p>Title: <input type="text" th:field="*{title}" /></p>
+        <p>Description: <input type="text" th:field="*{description}" /></p>
+        <p><input type="submit" value="Erstellen" /></p>
+    </form>
+	<a href="#" th:href="@{/}">Back to home</a>
+	<br />
+</body>
+</html>

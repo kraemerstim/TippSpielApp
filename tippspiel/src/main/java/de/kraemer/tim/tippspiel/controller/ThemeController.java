@@ -2,14 +2,18 @@ package de.kraemer.tim.tippspiel.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.kraemer.tim.tippspiel.Entities.Room;
 import de.kraemer.tim.tippspiel.Entities.Theme;
+import de.kraemer.tim.tippspiel.forms.RoomData;
+import de.kraemer.tim.tippspiel.forms.ThemeData;
 import de.kraemer.tim.tippspiel.repositories.RoomRepository;
 import de.kraemer.tim.tippspiel.repositories.ThemeRepository;
 
@@ -21,38 +25,41 @@ public class ThemeController {
 	private ThemeRepository themeRepository;
 	@Autowired
 	private RoomRepository roomRepository;
-		
-	@GetMapping(path="/add") // Map ONLY GET Requests
-	public @ResponseBody String addNewTheme (@RequestParam String title, @RequestParam String description) {
-		// @ResponseBody means the returned String is the response, not a view name
-		// @RequestParam means it is a parameter from the GET or POST request
+	
+	@GetMapping(path="/list")
+	public String Rooms(Model model) {
+        model.addAttribute("themeData", new ThemeData());
+        model.addAttribute("roomData", new RoomData());
+		model.addAttribute("themes", themeRepository.findAll());
+		return "themes";
+	}
+	
+	@PostMapping(path="/add")
+	public String addNewTheme (ThemeData themeData) {
 		Theme theme = new Theme();
-		theme.setDescription(description);
-		theme.setTitle(title);
+		theme.setDescription(themeData.getDescription());
+		theme.setTitle(themeData.getTitle());
 		themeRepository.save(theme);
-		return "Saved";
+		return "redirect:/theme/list";
 	}
 	
-	@GetMapping(path="/all")
-	public @ResponseBody Iterable<Theme> Themes() {
-		// This returns a JSON or XML with the users
-		return themeRepository.findAll();
+	@GetMapping(path="/{id}/show")
+	public String ShowRoomByID(@PathVariable int id, Model model) {
+		model.addAttribute("theme",themeRepository.findOne(id));
+		return Rooms(model);
 	}
 	
-	@GetMapping(path="/{id}")
-	public @ResponseBody Theme GetThemeByID(@PathVariable int id) {
-		return themeRepository.findOne(id);
-	}
-	
-	@GetMapping(path="/{id}/createRoom")
-	public @ResponseBody Room CreateNewPlayer(@PathVariable int id, @RequestParam String name)
-	{
+	@PostMapping(path="/{id}/createRoom")
+	public String GetThemeByID(@PathVariable int id, Model model, RoomData roomData) {
 		Theme theme = themeRepository.findOne(id);
 		
 		Room room = new Room();
 		room.setTheme(theme);
-		room.setName(name);
+		room.setName(roomData.getName());
+		theme.getRooms().add(room);
 		roomRepository.save(room);
-		return room;
+		
+		model.addAttribute("theme", theme);
+		return Rooms(model);
 	}
 }
