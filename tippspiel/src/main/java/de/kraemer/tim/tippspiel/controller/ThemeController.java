@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.kraemer.tim.tippspiel.Entities.CardType;
 import de.kraemer.tim.tippspiel.Entities.Room;
 import de.kraemer.tim.tippspiel.Entities.Theme;
+import de.kraemer.tim.tippspiel.forms.CardTypeData;
 import de.kraemer.tim.tippspiel.forms.RoomData;
 import de.kraemer.tim.tippspiel.forms.ThemeData;
+import de.kraemer.tim.tippspiel.repositories.CardTypeRepository;
 import de.kraemer.tim.tippspiel.repositories.RoomRepository;
 import de.kraemer.tim.tippspiel.repositories.ThemeRepository;
 
@@ -25,11 +26,14 @@ public class ThemeController {
 	private ThemeRepository themeRepository;
 	@Autowired
 	private RoomRepository roomRepository;
+	@Autowired
+	private CardTypeRepository cardTypeRepository;
 	
 	@GetMapping(path="/list")
 	public String Rooms(Model model) {
         model.addAttribute("themeData", new ThemeData());
         model.addAttribute("roomData", new RoomData());
+        model.addAttribute("cardTypeData", new CardTypeData());
 		model.addAttribute("themes", themeRepository.findAll());
 		return "themes";
 	}
@@ -50,7 +54,7 @@ public class ThemeController {
 	}
 	
 	@PostMapping(path="/{id}/createRoom")
-	public String GetThemeByID(@PathVariable int id, Model model, RoomData roomData) {
+	public String CreateRoom(@PathVariable int id, Model model, RoomData roomData) {
 		Theme theme = themeRepository.findOne(id);
 		
 		Room room = new Room();
@@ -58,6 +62,22 @@ public class ThemeController {
 		room.setName(roomData.getName());
 		theme.getRooms().add(room);
 		roomRepository.save(room);
+		
+		model.addAttribute("theme", theme);
+		return Rooms(model);
+	}
+	
+	@PostMapping(path="/{id}/createCardType")
+	public String CreateCardType(@PathVariable int id, Model model, CardTypeData cardTypeData) {
+		Theme theme = themeRepository.findOne(id);
+		
+		CardType cardType = new CardType();
+		cardType.setTheme(theme);
+		cardType.setTitle(cardTypeData.getTitle());
+		cardType.setDescription(cardTypeData.getDescription());
+		theme.getCardTypes().add(cardType);
+		
+		cardTypeRepository.save(cardType);
 		
 		model.addAttribute("theme", theme);
 		return Rooms(model);

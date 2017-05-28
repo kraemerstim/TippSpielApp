@@ -22,7 +22,7 @@
 	</table>
 	
 	<div th:if="${theme}" th:object="${theme}">
-		<h1 th:text="'Infos for theme ' + *{title} + ':'">Theme-Infos:</h1>
+		<h1 th:text="'Rooms for theme ' + *{title} + ':'">Theme-Infos:</h1>
 		<table>
 			<tr>
 				<td>#</td>
@@ -30,12 +30,32 @@
 			</tr>
 			<tr th:each="room,iterationStatus  : *{rooms}">
 				<td th:text="${iterationStatus.count}">1</td>
-				<td th:text="${room.name}">Raumname</td>
+				<td th:text="${room.name}">Roomname</td>
 			</tr>
 		</table>
 		<h2>Create new Room:</h2>
 		<form action="#" th:action="@{/theme/{id}/createRoom(id=${theme.id})}" th:object="${roomData}" method="post">
     		<p>Title: <input type="text" th:field="*{name}" /></p>
+       		<p><input type="submit" value="Erstellen" /></p>
+   		</form>
+   		
+   		<h1 th:text="'CardTypes for theme ' + *{title} + ':'">Theme-Infos:</h1>
+		<table>
+			<tr>
+				<td>#</td>
+				<td>Title</td>
+				<td>Description</td>
+			</tr>
+			<tr th:each="type,iterationStatus  : *{cardTypes}">
+				<td th:text="${iterationStatus.count}">1</td>
+				<td th:text="${type.title}">Title</td>
+				<td th:text="${type.description}">Description</td>
+			</tr>
+		</table>
+		<h2>Create new CardType:</h2>
+		<form action="#" th:action="@{/theme/{id}/createCardType(id=${theme.id})}" th:object="${cardTypeData}" method="post">
+    		<p>Title: <input type="text" th:field="*{title}" /></p>
+    		<p>Description: <input type="text" th:field="*{description}" /></p>
        		<p><input type="submit" value="Erstellen" /></p>
    		</form>
 	</div>
