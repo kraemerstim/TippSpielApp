@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import de.kraemer.tim.tippspiel.ControllerExtender;
 import de.kraemer.tim.tippspiel.player.Player;
 import de.kraemer.tim.tippspiel.player.PlayerRepository;
 import de.kraemer.tim.tippspiel.room.Room;
@@ -25,6 +27,11 @@ public class AccountController {
 	private PlayerRepository playerRepository;
 	@Autowired
 	private RoomRepository roomRepository;
+	
+	@ModelAttribute
+    public void addAttributes(Model model) {
+        ControllerExtender.InsertHeaderModelAttributes(model);
+    }
 	
 	@GetMapping(path="/add") // Map ONLY GET Requests
 	public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam String password) {

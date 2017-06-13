@@ -16,6 +16,7 @@ public class Room {
 	private String name;
 	private String password;
 	private Integer maxPlayers;
+	private String code;
 	
 	@ManyToOne
 	private Theme theme;
@@ -49,6 +50,12 @@ public class Room {
 	}
 	public void setMaxPlayers(Integer maxPlayers) {
 		this.maxPlayers = maxPlayers;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 	
 }

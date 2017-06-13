@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Getting Started: Serving Web Content</title>
+<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+  <div th:replace="fragments/header :: header" />
+  <table>
+    <tr>
+      <td>#</td>
+      <td>Name</td>
+      <td>Theme</td>
+      <td>Code</td>
+      <td>Join</td>
+    </tr>
+    <tr th:each="room,iterationStatus  : ${rooms}">
+      <td th:text="${iterationStatus.count}">1</td>
+      <td th:text="${room.name}">Name</td>
+      <td th:text="${room.theme.title}">Title</td>
+      <td th:text="${room.code}">Code</td>
+      <td><a href="#" th:href="@{/room/{id}/join(id=${room.id})}">Join</a></td>
+    </tr>
+  </table>
+
+  <form action="#" th:action="@{/room/join}" th:object="${roomData}" method="post">
+    <p>
+      Code: <input type="text" th:field="*{code}" />
+    </p>
+    <p>
+      <input type="submit" value="Join" />
+    </p>
+  </form>
+  <div th:replace="fragments/footer :: footer" />
+</body>
+</html>

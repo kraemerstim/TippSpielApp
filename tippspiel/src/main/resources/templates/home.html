@@ -2,16 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Getting Started: Handling Form Submission</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
-	<h1>Home</h1>
-	<div th:if="${session.isLoggedIn}" th:text="'logged in as ' + ${session.account.name}" th:unless="${session.account == null}"> Test123 </div>
-    <br />
+    <div th:replace="fragments/header :: header"/>
     <a th:if="not ${session.isLoggedIn}" href="#" th:href="@{/login}">Login</a>
     <a th:if="${session.isLoggedIn}" href="#" th:href="@{/logout}">Logout</a> <br />
     <a href="#" th:href="@{/register}">Register</a> <p />
     <a href="#" th:href="@{/room/list}">Rooms</a> <br />
     <a href="#" th:href="@{/theme/list}">Themes</a> <br />
+    
+    <div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

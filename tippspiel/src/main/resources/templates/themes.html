@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Getting Started: Serving Web Content</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Getting Started: Serving Web Content</title>
+    <div th:replace="fragments/header :: header-css"/>
 </head>
 <body>
+    <div th:replace="fragments/header :: header"/>
 	<h1>Themes:</h1>
 	<table th:if="${not #lists.isEmpty(themes)}">
 		<tr>
@@ -27,15 +28,18 @@
 			<tr>
 				<td>#</td>
 				<td>Roomname</td>
+                <td>Code</td>
 			</tr>
 			<tr th:each="room,iterationStatus  : *{rooms}">
 				<td th:text="${iterationStatus.count}">1</td>
 				<td th:text="${room.name}">Roomname</td>
+                <td th:text="${room.code}">Roomname</td>
 			</tr>
 		</table>
 		<h2>Create new Room:</h2>
 		<form action="#" th:action="@{/theme/{id}/createRoom(id=${theme.id})}" th:object="${roomData}" method="post">
     		<p>Title: <input type="text" th:field="*{name}" /></p>
+            <p>Code: <input type="text" th:field="*{code}" /></p>
        		<p><input type="submit" value="Erstellen" /></p>
    		</form>
    		
@@ -67,7 +71,6 @@
         <p>Description: <input type="text" th:field="*{description}" /></p>
         <p><input type="submit" value="Erstellen" /></p>
     </form>
-	<a href="#" th:href="@{/}">Back to home</a>
-	<br />
+    <div th:replace="fragments/footer :: footer"/>
 </body>
 </html>
